@@ -1,18 +1,44 @@
 ---
+import { getCollection } from "astro:content"
+
 import Layout from '../layouts/Layout.astro';
+import Heading from '../components/Heading.astro';
+
+const reviews = await getCollection('review');
+
+const recentReviews = reviews.slice(0, 5);
+
+const favoriteAlbums = reviews.sort((a, b) => b.data.note - a.data.note).slice(0, 5);
 ---
 
 <Layout title="Boomboxd">
-  <main>
-    <div class="pt-16 flex items-center justify-center flex-col">
-      <h1 class="text-6xl font-bold my-4">Boomboxd</h1>
-      <p class="text-xl text-zinc-400">(não consegui pensar num nome melhor)</p>
+  <main class="py-16">
+    <div class="my-16 flex items-center justify-center flex-col">
+      <p class="text-3xl text-slate-400">Eu escuto músicas, reclamo delas e finjo que entendo de algo.</p>
     </div>
 
-    <h2 class="mt-8 font-bold text-4xl">Últimas reviews</h2>
+    <Heading title="Últimas reviews" /> 
+    <div class="w-full flex">
+      {recentReviews.map((review) =>  (
+        <a href={`/review/${review.slug}`} class="flex items-center justify-center flex-col w-48">
+          <img src={review.data.cover} alt={review.data.title} class="aspect-square object-cover h-48 border border-slate-800" />
+          <p class="mt-4 text-slate-400 text-center">{review.data.title}</p>
+
+          <span class="text-slate-500">{review.data.artist} - {review.data.note}/5</span>
+        </a>
+      ))}
+    </div>
+
+    <Heading title="Álbuns favoritos" />
+    <div class="w-full flex">
+      {favoriteAlbums.map((review) =>  (
+        <a href={`/review/${review.slug}`} class="flex items-center justify-center flex-col w-48">
+          <img src={review.data.cover} alt={review.data.title} class="aspect-square object-cover h-48 border border-slate-800" />
+          <p class="mt-4 text-slate-400 text-center">{review.data.title}</p>
+
+          <span class="text-slate-500">{review.data.artist} - {review.data.note}/5</span>
+        </a>
+      ))}
+    </div>
   </main>
 </Layout>
-
-<style>
-
-</style>
