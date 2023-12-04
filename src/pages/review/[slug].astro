@@ -1,5 +1,6 @@
 ---
-import { CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
+
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
@@ -13,8 +14,29 @@ type Props = CollectionEntry<"review">;
 
 const post = Astro.props;
 const { Content } = await post.render();
+
+const proseConfigClass: string[] = [
+  "prose",
+  "prose-invert",
+  "prose-h1:font-semibold",
+  "prose-p:text-slate-400",
+]
 ---
 
 <Layout title={"Review"}>
-  <Content />
+
+  <div class="flex gap-8 py-8 items-end">
+    <img src={post.data.cover} alt={post.data.title} class="h-48 aspect-square border border-slate-700"/>
+
+
+    <div>
+      <h1 class="text-4xl text-slate-200 font-semibold">{post.data.title}</h1>
+      <p class="mt-4 text-2xl text-slate-400">Por {post.data.artist} ({post.data.releaseDate.getFullYear()})</p>
+      <p class="mt-1 text-xl">Nota: {post.data.note} de 5</p>
+    </div>
+  </div>
+
+  <div class={proseConfigClass.join(" ")}>
+    <Content />
+  </div>
 </Layout>

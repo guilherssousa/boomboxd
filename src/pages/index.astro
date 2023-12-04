@@ -18,9 +18,9 @@ const favoriteAlbums = reviews.sort((a, b) => b.data.note - a.data.note).slice(0
     </div>
 
     <Heading title="Últimas reviews" /> 
-    <div class="w-full flex">
+    <div class="w-full flex gap-x-2">
       {recentReviews.map((review) =>  (
-        <a href={`/review/${review.slug}`} class="flex items-center justify-center flex-col w-48">
+        <a href={`/review/${review.slug}`} class="flex items-center flex-col w-48">
           <img src={review.data.cover} alt={review.data.title} class="aspect-square object-cover h-48 border border-slate-800" />
           <p class="mt-4 text-slate-400 text-center">{review.data.title}</p>
 
@@ -30,9 +30,9 @@ const favoriteAlbums = reviews.sort((a, b) => b.data.note - a.data.note).slice(0
     </div>
 
     <Heading title="Álbuns favoritos" />
-    <div class="w-full flex">
+    <div class="w-full flex gap-x-2">
       {favoriteAlbums.map((review) =>  (
-        <a href={`/review/${review.slug}`} class="flex items-center justify-center flex-col w-48">
+        <a href={`/review/${review.slug}`} class="flex items-center flex-col w-48">
           <img src={review.data.cover} alt={review.data.title} class="aspect-square object-cover h-48 border border-slate-800" />
           <p class="mt-4 text-slate-400 text-center">{review.data.title}</p>
 
